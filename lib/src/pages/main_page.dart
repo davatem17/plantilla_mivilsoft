@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantilla_mivilsoft/src/pages/login.dart';
-import 'package:plantilla_mivilsoft/src/pages/register.dart';
+import 'package:plantilla_mivilsoft/src/pages/map.dart';
 import 'package:plantilla_mivilsoft/src/utils/enums.dart';
 
 class MainPage extends StatefulWidget {
@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Register(),
+                      builder: (context) => Maps(),
                     ));
               },
               child: const Icon(Icons.map),

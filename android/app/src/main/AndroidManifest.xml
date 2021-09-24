@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.plantilla_mivilsoft">
+<uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="plantilla_mivilsoft"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCNuNV4mZs4zyti0ZKb9ziOKza9FD00wu4"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
