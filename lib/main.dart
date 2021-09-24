@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:plantilla_mivilsoft/pages/splash.dart';
+import 'package:plantilla_mivilsoft/src/pages/splash.dart';
 
 void main() {
   runApp(MyApp());

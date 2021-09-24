@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:plantilla_mivilsoft/pages/register.dart';
+import 'package:plantilla_mivilsoft/src/pages/login.dart';
+import 'package:plantilla_mivilsoft/src/pages/main_page.dart';
+
 import 'package:simple_animations/simple_animations.dart';
 
-class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  Register({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
@@ -35,11 +37,10 @@ class _LoginState extends State<Login> {
                   );
                 }),
             Container(
-              height: _heigth * 0.3,
+              height: _heigth * 0.2,
               width: _width,
               child: Image.asset('assets/images/logo.png'),
             ),
-            Divider(),
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -58,6 +59,10 @@ class _LoginState extends State<Login> {
                     Form(
                         child: Column(
                       children: [
+                        TextFormField(
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.badge), labelText: 'Nombre'),
+                        ),
                         TextFormField(
                           decoration: InputDecoration(
                               icon: Icon(Icons.alternate_email),
@@ -82,14 +87,16 @@ class _LoginState extends State<Login> {
                           minWidth: 200.0,
                           color: Colors.blue,
                           child: Text(
-                            'Iniciar Sesión',
+                            'Crear cuenta',
                             style: TextStyle(fontSize: 20.0),
                           ),
                           onPressed: () async {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Register()));
+                                    builder: (context) => MainPage(
+                                          titulo: 'Listas',
+                                        )));
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
@@ -100,14 +107,14 @@ class _LoginState extends State<Login> {
                           minWidth: 200.0,
                           color: Colors.blue,
                           child: Text(
-                            'Registrarse',
+                            'Volver',
                             style: TextStyle(fontSize: 20.0),
                           ),
                           onPressed: () async {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Register()));
+                                    builder: (context) => Login()));
                           },
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.0),
