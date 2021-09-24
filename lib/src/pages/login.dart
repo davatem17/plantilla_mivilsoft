@@ -45,14 +45,7 @@ class _LoginState extends State<Login> {
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromRGBO(143, 148, 251, .2),
-                      blurRadius: 20,
-                      offset: Offset(0, 10))
-                ],
               ),
               child: Center(
                 child: Column(
@@ -99,7 +92,6 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                        Divider(),
                         MaterialButton(
                           minWidth: 200.0,
                           color: Colors.blue,

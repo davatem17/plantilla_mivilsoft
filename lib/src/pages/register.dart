@@ -44,14 +44,7 @@ class _RegisterState extends State<Register> {
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromRGBO(143, 148, 251, .2),
-                      blurRadius: 20,
-                      offset: Offset(0, 10))
-                ],
               ),
               child: Center(
                 child: Column(

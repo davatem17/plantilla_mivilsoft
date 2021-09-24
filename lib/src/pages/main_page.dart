@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:plantilla_mivilsoft/src/pages/login.dart';
 import 'package:plantilla_mivilsoft/src/pages/map.dart';
+import 'package:plantilla_mivilsoft/src/providers/app_provider.dart';
 import 'package:plantilla_mivilsoft/src/utils/enums.dart';
+import 'package:plantilla_mivilsoft/src/utils/user_shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key, required this.titulo}) : super(key: key);
@@ -13,14 +16,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+  bool darkModePrefs = false;
   @override
   void initState() {
     super.initState();
     print("inicio del Estado");
+    _loadDarkModePrefs();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appProvider = Provider.of<AppProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -30,40 +36,67 @@ class _MainPageState extends State<MainPage> {
       ),
       drawer: Drawer(
           child: ListView(
-        padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration:
-                BoxDecoration(color: Theme.of(context).primaryColorDark),
-            child: SingleChildScrollView(
-              child: Text(
-                "Bienvenid@",
-                style: TextStyle(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).primaryColorLight),
-                textAlign: TextAlign.center,
-              ),
+          UserAccountsDrawerHeader(
+            accountName: Text('Mivil App'), //momentaneamente
+            accountEmail: Text('¡Bienvenidos!'),
+            currentAccountPicture: CircleAvatar(
+              child: Image.asset('assets/images/user.png'),
             ),
           ),
-          Divider(
-            color: Colors.white,
+          ListTile(
+            title: Text('Mi Cuenta'),
+            leading: Icon(Icons.person),
+            onTap: () {},
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 8.0),
+          ListTile(
+            title: Text('Acerca de'),
+            leading: Icon(Icons.info),
+            onTap: () {},
           ),
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Login(),
-                    ));
-              },
-              child: Text(
-                'Salir',
-                style: Theme.of(context).textTheme.headline6,
-              ))
+          Column(
+            children: [
+              darkModePrefs == null
+                  ? Container()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Icon(Icons.wb_sunny),
+                            Switch(
+                                value: darkModePrefs,
+                                //value: darkModePrefs = false,
+                                onChanged: (value) {
+                                  appProvider.darkMode = value;
+                                  setDarkMode(value);
+                                  if (value == true) {
+                                    print("Modo nocturno activado");
+                                    darkModePrefs = true;
+                                  } else {
+                                    print("Modo nocturno desactivado");
+                                    darkModePrefs = false;
+                                  }
+
+                                  Navigator.pop(context);
+                                }),
+                            Icon(Icons.brightness_2)
+                          ],
+                        )
+                      ],
+                    )
+            ],
+          ),
+          ListTile(
+            title: Text('Salir'),
+            leading: Icon(Icons.close),
+            onTap: () async {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => Login()),
+                  (route) => false);
+            },
+          )
         ],
       )),
       body: Container(
@@ -94,5 +127,10 @@ class _MainPageState extends State<MainPage> {
                   BottomNavigationBarItem(icon: Icon(e.icon), label: e.label))
               .toList()),
     );
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {}); //manda a cambiar los estados
   }
 }
