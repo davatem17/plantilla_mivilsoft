@@ -92,6 +92,7 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
+                        Divider(),
                         MaterialButton(
                           minWidth: 200.0,
                           color: Colors.blue,

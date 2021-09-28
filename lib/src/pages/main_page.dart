@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:plantilla_mivilsoft/src/pages/about.dart';
+import 'package:plantilla_mivilsoft/src/pages/account.dart';
 import 'package:plantilla_mivilsoft/src/pages/login.dart';
 import 'package:plantilla_mivilsoft/src/pages/map.dart';
 import 'package:plantilla_mivilsoft/src/providers/app_provider.dart';
@@ -47,12 +49,18 @@ class _MainPageState extends State<MainPage> {
           ListTile(
             title: Text('Mi Cuenta'),
             leading: Icon(Icons.person),
-            onTap: () {},
+            onTap: () async {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Account()));
+            },
           ),
           ListTile(
             title: Text('Acerca de'),
             leading: Icon(Icons.info),
-            onTap: () {},
+            onTap: () async {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => About()));
+            },
           ),
           Column(
             children: [
