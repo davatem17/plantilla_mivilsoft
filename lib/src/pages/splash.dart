@@ -25,13 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Spacer(),
             Center(
               child: FractionallySizedBox(
-                  widthFactor: .9,
+                  widthFactor: .8,
                   child: Image.asset('assets/images/logo.png')),
             ),
-            Spacer(),
             CircularProgressIndicator(
               color: Colors.blue,
             ),

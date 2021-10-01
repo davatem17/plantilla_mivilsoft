@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantilla_mivilsoft/src/pages/login.dart';
 import 'package:plantilla_mivilsoft/src/pages/main_page.dart';
-
-import 'package:simple_animations/simple_animations.dart';
+import 'package:plantilla_mivilsoft/src/utils/user_shared_preferences.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -13,6 +12,14 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> {
   bool _obscureText = true;
+  bool? darkModePrefs;
+  @override
+  void initState() {
+    super.initState();
+    print("inicio del Estado");
+    _loadDarkModePrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     double _heigth = MediaQuery.of(context).size.height;
@@ -21,23 +28,8 @@ class _RegisterState extends State<Register> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            PlayAnimation(
-                duration: Duration(milliseconds: 900),
-                delay: Duration(milliseconds: (300 * 2).round()),
-                curve: Curves.easeInOut,
-                tween: Tween<double>(begin: 0, end: 1),
-                builder: (context, child, value) {
-                  return Container(
-                    height: 210,
-                    //210,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/curva1.png'),
-                            fit: BoxFit.fill)),
-                  );
-                }),
             Container(
-              height: _heigth * 0.2,
+              height: _heigth * 0.3,
               width: _width,
               child: Image.asset('assets/images/logo.png'),
             ),
@@ -78,10 +70,16 @@ class _RegisterState extends State<Register> {
                         Divider(),
                         MaterialButton(
                           minWidth: 200.0,
-                          color: Colors.blue,
+                          color: darkModePrefs == false
+                              ? Colors.blue
+                              : Colors.greenAccent,
                           child: Text(
                             'Crear cuenta',
-                            style: TextStyle(fontSize: 20.0),
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black),
                           ),
                           onPressed: () async {
                             Navigator.push(
@@ -98,10 +96,16 @@ class _RegisterState extends State<Register> {
                         Divider(),
                         MaterialButton(
                           minWidth: 200.0,
-                          color: Colors.blue,
+                          color: darkModePrefs == false
+                              ? Colors.blue
+                              : Colors.greenAccent,
                           child: Text(
                             'Volver',
-                            style: TextStyle(fontSize: 20.0),
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: darkModePrefs == false
+                                    ? Colors.white
+                                    : Colors.black),
                           ),
                           onPressed: () async {
                             Navigator.push(
@@ -123,5 +127,10 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {}); //manda a cambiar los estados
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:plantilla_mivilsoft/src/pages/main_page.dart';
 import 'package:plantilla_mivilsoft/src/pages/register.dart';
-
-import 'package:simple_animations/simple_animations.dart';
+import 'package:plantilla_mivilsoft/src/utils/user_shared_preferences.dart';
 
 class Login extends StatefulWidget {
   Login({Key? key}) : super(key: key);
@@ -13,6 +12,14 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool _obscureText = true;
+  bool? darkModePrefs;
+  @override
+  void initState() {
+    super.initState();
+    print("inicio del Estado");
+    _loadDarkModePrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     double _heigth = MediaQuery.of(context).size.height;
@@ -21,27 +28,14 @@ class _LoginState extends State<Login> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            PlayAnimation(
-                duration: Duration(milliseconds: 900),
-                delay: Duration(milliseconds: (300 * 2).round()),
-                curve: Curves.easeInOut,
-                tween: Tween<double>(begin: 0, end: 1),
-                builder: (context, child, value) {
-                  return Container(
-                    height: 210,
-                    //210,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/curva1.png'),
-                            fit: BoxFit.fill)),
-                  );
-                }),
             Container(
               height: _heigth * 0.3,
               width: _width,
-              child: Image.asset('assets/images/logo.png'),
+              child: buildimage(),
             ),
-            Divider(),
+            Divider(
+              color: darkModePrefs == false ? Colors.white : Colors.grey[850],
+            ),
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
@@ -49,70 +43,7 @@ class _LoginState extends State<Login> {
               ),
               child: Center(
                 child: Column(
-                  children: <Widget>[
-                    Form(
-                        child: Column(
-                      children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.alternate_email),
-                              labelText: 'Correo electrónico'),
-                        ),
-                        TextFormField(
-                          obscureText: _obscureText,
-                          decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  _obscureText = !_obscureText;
-                                },
-                                child: Icon(_obscureText
-                                    ? Icons.visibility
-                                    : Icons.visibility_off),
-                              ),
-                              icon: Icon(Icons.vpn_key),
-                              labelText: 'Contraseña'),
-                        ),
-                        Divider(),
-                        MaterialButton(
-                          minWidth: 200.0,
-                          color: Colors.blue,
-                          child: Text(
-                            'Iniciar Sesión',
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MainPage(
-                                          titulo: 'Listas',
-                                        )));
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                        Divider(),
-                        MaterialButton(
-                          minWidth: 200.0,
-                          color: Colors.blue,
-                          child: Text(
-                            'Registrarse',
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Register()));
-                          },
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        ),
-                      ],
-                    ))
-                  ],
+                  children: <Widget>[formulario()],
                 ),
               ),
             ),
@@ -120,5 +51,79 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  Widget formulario() => Form(
+          child: Container(
+              child: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(
+                icon: Icon(Icons.alternate_email),
+                labelText: 'Correo electrónico'),
+          ),
+          TextFormField(
+            obscureText: _obscureText,
+            decoration: InputDecoration(
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    _obscureText = !_obscureText;
+                  },
+                  child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off),
+                ),
+                icon: Icon(Icons.vpn_key),
+                labelText: 'Contraseña'),
+          ),
+          Divider(
+            color: darkModePrefs == false ? Colors.white : Colors.grey[850],
+          ),
+          MaterialButton(
+            minWidth: 200.0,
+            color: darkModePrefs == false ? Colors.blue : Colors.greenAccent,
+            child: Text(
+              'Iniciar Sesión',
+              style: TextStyle(
+                  fontSize: 20.0,
+                  color: darkModePrefs == false ? Colors.white : Colors.black),
+            ),
+            onPressed: () async {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MainPage(
+                            titulo: 'Listas',
+                          )));
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
+          Divider(
+            color: darkModePrefs == false ? Colors.white : Colors.grey[850],
+          ),
+          MaterialButton(
+            minWidth: 200,
+            color: darkModePrefs == false ? Colors.blue : Colors.greenAccent,
+            child: Text(
+              'Registrarse',
+              style: TextStyle(
+                  fontSize: 20.0,
+                  color: darkModePrefs == false ? Colors.white : Colors.black),
+            ),
+            onPressed: () async {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Register()));
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+          ),
+        ],
+      )));
+  Widget buildimage() => Image.asset('assets/images/logo.png');
+  _loadDarkModePrefs() async {
+    darkModePrefs = await getDarkMode();
+    setState(() {}); //manda a cambiar los estados
   }
 }

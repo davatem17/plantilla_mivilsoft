@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Camara 1",
+        "placa": "TYU2325",
+        "lugar": "adelante"
+    },
+    {
+        "nombre": "Camara 2",
+        "placa": "TUI7825",
+        "lugar": "atras"
+    },
+    {
+        "nombre": "Camara 3",
+        "placa": "TKI1234",
+        "lugar": "adelante"
+    },
+    {
+        "nombre": "Camara 4",
+        "placa": "TYT9874",
+        "lugar": "adelante"
+    },
+    {
+        "nombre": "Camara 5",
+        "placa": "TIU9632",
+        "lugar": "atras"
+    },
+    {
+        "nombre": "Camara 6",
+        "placa": "TRR7845",
+        "lugar": "atras"
+    }
+]
